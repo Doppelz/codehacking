@@ -18,3 +18,17 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+
+Route::get('/test',function(){
+	$user = App\User::find(2);
+	$user->role_id = 4;
+	$user->save();
+});
+
+Route::get('/admin', function(){
+	return view('admin.index');
+});
+
+
+Route::resource('admin/users', 'AdminUsersController');
