@@ -3,6 +3,9 @@
 
 @section('content')
 	<h1>User</h1>
+	@if(Session::get('info'))
+		<div class="bg-danger">{{session('info')}}</div>
+	@endif
 	<table class="table table-hover">
     <thead>
     	<tr>

@@ -16,6 +16,8 @@ use App\Http\Requests\UsersRequest;
 
 use App\Http\Requests\UserEditRequest;
 
+use Illuminate\Support\Facades\Session;
+
 class AdminUsersController extends Controller
 {
     /**
@@ -26,6 +28,7 @@ class AdminUsersController extends Controller
     public function index()
     {
         //
+        
         $users = User::all();
         return view('admin.users.index', ['users' => $users]);
     }
@@ -51,9 +54,7 @@ class AdminUsersController extends Controller
     public function store(UsersRequest $request)
     {
         //
-
         $input = $request->all();
-        $photo = "";
         if($file = $request->file('file')){
             $photo_name = time().$file->getClientOriginalName();
 
@@ -139,5 +140,15 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+
+        Session::flash('info', 'user has been deleted');
+
+        $user = User::findOrFail($id);
+        
+        unlink(public_path().$user->photo->file);
+        $user->photo()->delete();
+        $user->delete();
+
+        return redirect()->action('AdminUsersController@index');
     }
 }

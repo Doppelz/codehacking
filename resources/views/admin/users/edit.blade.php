@@ -46,11 +46,22 @@
 		{!! Form::file('file', null, ['class'=>'form-control']) !!}
 	</div>
 
-
-	<div class="form-group">
+	<div class="clearfix">
+	<div class="form-group pull-left">
 		{!! Form::submit('Create User', ['class'=> 'btn btn-primary']) !!}
 	</div>
 
+	
+	
+
+	
+	{!! Form::close() !!}
+	{!! Form::open(['method'=>'delete', 'action'=>['AdminUsersController@destroy', $user->id], 'class'=>'pull-right']) !!}
+		<div class="form-group">
+			{!! Form::submit('Delete user',['class'=>'btn btn-danger']) !!}
+		</div>
+	{!! Form::close() !!}
+	</div>
 	@if(count($errors)>0)
 	<div class="alert alert-danger">
 	<ul>
@@ -60,9 +71,5 @@
 	</ul>
 	</div>
 	@endif
-	</div>		
-
-	
-	{!! Form::close() !!}
-
+</div>		
 @stop
